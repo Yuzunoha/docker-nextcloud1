@@ -21,8 +21,8 @@ services:
     image: nextcloud
     ports:
       - 8080:80
-    links:
-      - db
     volumes:
       - nextcloud:/var/www/html
+      - /media/yuzunoha/sdcard16gb:/media/yuzunoha/sdcard16gb
+      - /media/yuzunoha/usbdisk:/media/yuzunoha/usbdisk
     restart: always

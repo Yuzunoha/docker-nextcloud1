@@ -29,9 +29,6 @@ exit
 echo 'セカンダリのdbコンテナでsqlファイルをインポートする'
 docker exec $DB_CONTAINER_NAME_S mysql -u nextcloud -pnextcloud nextcloud < /dmp
 
-echo 'セカンダリのdbコンテナからsqlファイルを削除する'
-docker exec $DB_CONTAINER_NAME_S mysql rm -f /dmp
-
 echo 'セカンダリのoccでフィンガープリントを更新する'
 docker exec -u www-data $APP_CONTAINER_NAME_S php occ maintenance:data-fingerprint
 

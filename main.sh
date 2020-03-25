@@ -19,12 +19,12 @@ echo 'プライマリのデータフォルダをセカンダリにコピーす�
 #rsync -Aavx $NEXTCLOUD_DIR_P $NEXTCLOUD_DIR_S
 
 echo 'プライマリのdbをsqlファイルにエクスポートする'
-docker exec $DB_CONTAINER_NAME_P mysqldump --single-transaction -u root -proot nextcloud > ./$SQL_DUMP_FILE_NAME
-
-exit
+#docker exec $DB_CONTAINER_NAME_P mysqldump --single-transaction -u root -proot nextcloud > ./$SQL_DUMP_FILE_NAME
 
 echo 'sqlファイルをセカンダリのdbコンテナに転送する'
 docker cp ./$SQL_DUMP_FILE_NAME $DB_CONTAINER_NAME_S/:/dmp
+
+exit
 
 echo 'セカンダリのdbコンテナでsqlファイルをインポートする'
 docker exec $DB_CONTAINER_NAME_S mysql -u nextcloud -pnextcloud nextcloud < /dmp

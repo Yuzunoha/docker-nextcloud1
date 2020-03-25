@@ -25,11 +25,12 @@ echo 'sqlファイルをセカンダリのdbコンテナに転送する'
 #docker cp ./$SQL_DUMP_FILE_NAME $DB_CONTAINER_NAME_S/:/dmp
 
 echo 'セカンダリのdbコンテナで既存のDBを削除する'
-docker exec $DB_CONTAINER_NAME_S sh -c 'mysql -u nextcloud -pnextcloud -e "DROP DATABASE nextcloud"'
-
-exit
+#docker exec $DB_CONTAINER_NAME_S sh -c 'mysql -u nextcloud -pnextcloud -e "DROP DATABASE nextcloud"'
 
 echo 'セカンダリのdbコンテナで既存のDBを作成する'
+docker exec $DB_CONTAINER_NAME_S sh -c 'mysql -u nextcloud -pnextcloud -e "CREATE DATABASE nextcloud CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci"'
+
+exit
 
 echo 'セカンダリのdbコンテナでsqlファイルをインポートする'
 #docker exec $DB_CONTAINER_NAME_S sh -c 'mysql -u nextcloud -pnextcloud nextcloud < /dmp'

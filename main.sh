@@ -16,10 +16,12 @@ echo 'ベースディレクトリに移動する'
 cd $BASE_PATH
 
 echo 'プライマリのデータフォルダをセカンダリにコピーする'
-rsync -Aavx $NEXTCLOUD_DIR_P $NEXTCLOUD_DIR_S
+#rsync -Aavx $NEXTCLOUD_DIR_P $NEXTCLOUD_DIR_S
 
 echo 'プライマリのdbをsqlファイルにエクスポートする'
 docker exec $DB_CONTAINER_NAME_P mysqldump --single-transaction -u root -proot nextcloud > ./$SQL_DUMP_FILE_NAME
+
+exit
 
 echo 'sqlファイルをセカンダリのdbコンテナに転送する'
 docker cp ./$SQL_DUMP_FILE_NAME $DB_CONTAINER_NAME_S/:/dmp

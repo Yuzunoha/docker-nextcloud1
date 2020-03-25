@@ -28,12 +28,10 @@ echo 'セカンダリのdbコンテナで既存のDBを削除する'
 #docker exec $DB_CONTAINER_NAME_S sh -c 'mysql -u nextcloud -pnextcloud -e "DROP DATABASE nextcloud"'
 
 echo 'セカンダリのdbコンテナで既存のDBを作成する'
-docker exec $DB_CONTAINER_NAME_S sh -c 'mysql -u nextcloud -pnextcloud -e "CREATE DATABASE nextcloud CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci"'
-
-exit
+#docker exec $DB_CONTAINER_NAME_S sh -c 'mysql -u nextcloud -pnextcloud -e "CREATE DATABASE nextcloud CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci"'
 
 echo 'セカンダリのdbコンテナでsqlファイルをインポートする'
-#docker exec $DB_CONTAINER_NAME_S sh -c 'mysql -u nextcloud -pnextcloud nextcloud < /dmp'
+docker exec $DB_CONTAINER_NAME_S sh -c 'mysql -u nextcloud -pnextcloud nextcloud < /dmp'
 
 echo 'セカンダリのoccでフィンガープリントを更新する'
-#docker exec -u www-data $APP_CONTAINER_NAME_S php occ maintenance:data-fingerprint
+docker exec -u www-data $APP_CONTAINER_NAME_S php occ maintenance:data-fingerprint

@@ -25,10 +25,7 @@ echo 'sqlファイルをセカンダリのdbコンテナに転送する'
 #docker cp ./$SQL_DUMP_FILE_NAME $DB_CONTAINER_NAME_S/:/dmp
 
 echo 'セカンダリのdbコンテナでsqlファイルをインポートする'
-docker exec $DB_CONTAINER_NAME_S sh -c 'mysql -u nextcloud -pnextcloud nextcloud < /dmp'
-
-exit
+#docker exec $DB_CONTAINER_NAME_S sh -c 'mysql -u nextcloud -pnextcloud nextcloud < /dmp'
 
 echo 'セカンダリのoccでフィンガープリントを更新する'
-docker exec -u www-data $APP_CONTAINER_NAME_S php occ maintenance:data-fingerprint
-
+#docker exec -u www-data $APP_CONTAINER_NAME_S php occ maintenance:data-fingerprint

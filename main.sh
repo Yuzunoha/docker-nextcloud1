@@ -1,19 +1,35 @@
 #!/bin/sh
 
+# 定数宣言
 readonly BASE_PATH='/home/yuzunoha/git/docker-nextcloud1'
-readonly NEXTCLOUD_DIR_P=$BASE_PATH'/primary/nextcloud/'
-readonly NEXTCLOUD_DIR_S=$BASE_PATH'/secondary/nextcloud'
+readonly ROOT_DIR_P=$BASE_PATH'/primary/'
+readonly ROOT_DIR_S=$BASE_PATH'/secondary/'
+readonly NEXTCLOUD_DIR_P=$ROOT_DIR_P'/nextcloud/'
+readonly NEXTCLOUD_DIR_S=$ROOT_DIR_S'/nextcloud/'
+readonly SQL_DUMP_FILE_NAME='nextcloud-sqlbkp.bak'
+readonly DB_CONTAINER_NAME_P='primary_db_1'
+readonly DB_CONTAINER_NAME_S='secondary_db_1'
+readonly APP_CONTAINER_NAME_P='primary_app_1'
+readonly APP_CONTAINER_NAME_S='secondary_app_1'
 
-secondary_db_1
+echo 'ベースディレクトリに移動する'
+cd $BASE_PATH
 
-echo $NEXTCLOUD_DIR_P
-echo $NEXTCLOUD_DIR_S
+echo 'プライマリのデータフォルダをセカンダリにコピーする'
+rsync -Aavx $NEXTCLOUD_DIR_P $NEXTCLOUD_DIR_S
 
-docker exec secondary_db_1 whoami
+echo 'プライマリのdbをsqlファイルにエクスポートする'
+docker exec $DB_CONTAINER_NAME_P mysqldump --single-transaction -u root -proot nextcloud > ./$SQL_DUMP_FILE_NAME
 
-cd $NEXTCLOUD_DIR_P
-pwd
+echo 'sqlファイルをセカンダリのdbコンテナに転送する'
+docker cp ./$SQL_DUMP_FILE_NAME $DB_CONTAINER_NAME_S/:/dmp
 
-#echo 'rsync start'
-#rsync -Aavx /home/yuzunoha/git/docker-nextcloud1/primary/nextcloud/ /home/yuzunoha/git/docker-nextcloud1/secondary/nextcloud/
-#echo 'rsync end'
+echo 'セカンダリのdbコンテナでsqlファイルをインポートする'
+docker exec $DB_CONTAINER_NAME_S mysql -u nextcloud -pnextcloud nextcloud < /dmp
+
+echo 'セカンダリのdbコンテナからsqlファイルを削除する'
+docker exec $DB_CONTAINER_NAME_S mysql rm -f /dmp
+
+echo 'セカンダリのoccでフィンガープリントを更新する'
+docker exec -u www-data $APP_CONTAINER_NAME_S php occ maintenance:data-fingerprint
+

@@ -1,11 +1,11 @@
 #!/bin/sh
 
 # 定数宣言
-readonly BASE_PATH='/home/yuzunoha/git/docker-nextcloud1'
-readonly ROOT_DIR_P=$BASE_PATH'/primary/'
-readonly ROOT_DIR_S=$BASE_PATH'/secondary/'
-readonly NEXTCLOUD_DIR_P=$ROOT_DIR_P'/nextcloud/'
-readonly NEXTCLOUD_DIR_S=$ROOT_DIR_S'/nextcloud/'
+readonly BASE_DIR='/home/yuzunoha/git/docker-nextcloud1'
+readonly ROOT_DIR_P=$BASE_DIR'/primary'
+readonly ROOT_DIR_S=$BASE_DIR'/secondary'
+readonly NEXTCLOUD_DIR_P=$ROOT_DIR_P'/nextcloud'
+readonly NEXTCLOUD_DIR_S=$ROOT_DIR_S'/nextcloud'
 readonly SQL_DUMP_FILE_NAME='nextcloud-sqlbkp.bak'
 readonly DB_CONTAINER_NAME_P='primary_db_1'
 readonly DB_CONTAINER_NAME_S='secondary_db_1'
@@ -13,7 +13,7 @@ readonly APP_CONTAINER_NAME_P='primary_app_1'
 readonly APP_CONTAINER_NAME_S='secondary_app_1'
 
 echo 'ベースディレクトリに移動する'
-cd $BASE_PATH
+cd $BASE_DIR
 
 echo 'プライマリのデータフォルダをセカンダリにコピーする'
 rsync -Aax $NEXTCLOUD_DIR_P $NEXTCLOUD_DIR_S

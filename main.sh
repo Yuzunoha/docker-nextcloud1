@@ -15,6 +15,7 @@ readonly APP_CONTAINER_NAME_S='secondary_app_1'
 echo 'ベースディレクトリに移動する'
 cd $BASE_PATH
 
+# TODO 全く差分のない日はお休みする
 echo 'プライマリのデータフォルダをセカンダリにコピーする'
 rsync -Aax $NEXTCLOUD_PATH_P $NEXTCLOUD_PATH_S
 

@@ -2,8 +2,8 @@
 
 # 定数宣言
 readonly BASE_DIR='/home/yuzunoha/git/docker-nextcloud1'
-readonly ROOT_DIR_P=$BASE_DIR'/primary'
-readonly ROOT_DIR_S=$BASE_DIR'/secondary'
+readonly ROOT_DIR_P=$BASE_DIR'/docker/primary'
+readonly ROOT_DIR_S=$BASE_DIR'/docker/secondary'
 readonly NEXTCLOUD_DIR_P=$ROOT_DIR_P'/nextcloud'
 readonly NEXTCLOUD_DIR_S=$ROOT_DIR_S'/nextcloud'
 readonly SQL_DUMP_FILE_NAME='nextcloud-sqlbkp.bak'

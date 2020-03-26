@@ -22,5 +22,8 @@
   - rsyncの差分バックアップ(uオプション)で世話なさそう
     - rsync -auv dir1/ backup/
 
+## プレビュー文字化け対策
+- プライマリをセットアップまでやったら下記を実行する
+  - sudo ./fonts/fixfontprimary.sh
 
 [link1]:https://www.virment.com/setup-nextcloud-docker/

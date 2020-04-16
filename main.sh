@@ -16,6 +16,7 @@ echo 'ベースディレクトリに移動する'
 cd $BASE_PATH
 
 # TODO 全く差分のない日はお休みする
+# TODO config.phpは60000とか書いてあるからこのファイルだけコピー除外する
 echo 'プライマリのデータフォルダをセカンダリにコピーする'
 rsync -Aax $NEXTCLOUD_PATH_P $NEXTCLOUD_PATH_S
 

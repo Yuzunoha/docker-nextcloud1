@@ -18,7 +18,7 @@ cd $BASE_PATH
 # TODO 全く差分のない日はお休みする
 # TODO config.phpは60000とか書いてあるからこのファイルだけコピー除外する
 echo 'プライマリのデータフォルダをセカンダリにコピーする'
-rsync -Aax $NEXTCLOUD_PATH_P $NEXTCLOUD_PATH_S
+rsync -Aax --exclude='config' $NEXTCLOUD_PATH_P $NEXTCLOUD_PATH_S
 
 echo 'プライマリのdbをsqlファイルにエクスポートする'
 docker exec $DB_CONTAINER_NAME_P mysqldump --single-transaction -u root -proot nextcloud > ./$SQL_DUMP_FILE_NAME

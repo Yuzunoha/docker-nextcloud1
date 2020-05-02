@@ -19,4 +19,14 @@ services:
       - 60000:80
     volumes:
       - ./nextcloud:/var/www/html
+    environment:
+      VIRTUAL_HOST: primary.yuzunoha.net
+      LETSENCRYPT_HOST: primary.yuzunoha.net
+      LETSENCRYPT_EMAIL: studysteadystandby@gmail.com
     restart: always
+
+networks:
+  default:
+    external:
+      name: shared
+
